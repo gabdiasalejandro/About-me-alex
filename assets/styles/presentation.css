@@ -1,0 +1,1340 @@
+/* Light editorial theme. Scene-specific motion lives beside its component. */
+:root {
+  color-scheme:light;
+  --ink:#182b40;
+  --muted:#556777;
+  --blue:#2458df;
+  --line:#c7d4df;
+  --paper:#f0f6fb;
+  --pad:clamp(24px,5vw,90px);
+  font-family:Arial,Helvetica,sans-serif
+}
+
+* {
+  box-sizing:border-box
+}
+
+html,body {
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden
+}
+
+body {
+  background:var(--paper);
+  color:var(--ink)
+}
+
+button {
+  font:inherit;
+  color:inherit;
+  cursor:pointer
+}
+
+button:focus-visible {
+  outline:3px solid var(--blue);
+  outline-offset:4px
+}
+
+button:disabled {
+  opacity:.3;
+  cursor:default
+}
+
+img {
+  display:block;
+  width:100%
+}
+
+p,h1,h2,figure {
+  margin:0
+}
+
+#deck {
+  height:100dvh;
+  width:100vw;
+  position:relative;
+  overflow:hidden
+}
+
+.masthead {
+  height:72px;
+  padding:0 var(--pad);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.16em;
+  position:relative;
+  z-index:4;
+  pointer-events:none
+}
+
+.masthead span:last-child {
+  color:var(--muted);
+  font-weight:400
+}
+
+.scene {
+  position:absolute;
+  inset:0;
+  visibility:hidden;
+  opacity:0;
+  transition:opacity .3s ease,visibility 0s .3s;
+  background:#f0f6fb
+}
+
+.scene.active {
+  visibility:visible;
+  opacity:1;
+  transition-delay:0s
+}
+
+.scene-layout {
+  position:absolute;
+  inset:90px var(--pad) 100px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(28px,5vw,90px);
+  align-items:center
+}
+
+.copy {
+  position:relative;
+  z-index:1
+}
+
+.eyebrow {
+  font-size:clamp(12px,.95vw,15px);
+  letter-spacing:.08em;
+  color:var(--blue);
+  margin-bottom:30px
+}
+
+.copy h1 {
+  font-size:clamp(38px,5.5vw,91px);
+  line-height:1.01;
+  letter-spacing:-.055em;
+  font-weight:500;
+  margin-bottom:28px
+}
+
+.description {
+  font-size:clamp(17px,1.55vw,25px);
+  line-height:1.55;
+  max-width:37ch;
+  color:var(--muted)
+}
+
+.aside {
+  font-size:clamp(14px,1.2vw,18px);
+  margin-top:28px;
+  color:var(--blue)
+}
+
+.visual {
+  min-width:0;
+  max-height:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.photo {
+  position:relative;
+  width:100%;
+  min-width:0
+}
+
+.photo img {
+  object-fit:contain;
+  max-height:calc(100dvh - 245px);
+  height:auto
+}
+
+.photo figcaption {
+  font-size:12px;
+  line-height:1.4;
+  color:var(--muted);
+  margin-top:14px;
+  letter-spacing:.01em
+}
+
+.photo--intro {
+  max-width:380px;
+  transform:rotate(2deg)
+}
+
+.photo--intro img {
+  box-shadow:12px 14px 0 #d6e4f6
+}
+
+.scene--intro h1 {
+  font-size:clamp(48px,6.6vw,105px)
+}
+
+/* Full image framing preserves both the laptop and the face. No crop or animated zoom. */
+.scene--code .scene-layout {
+  grid-template-columns:.9fr 1.1fr
+}
+
+.photo--code img {
+  aspect-ratio:1600/1195;
+  object-fit:contain;
+  border:9px solid white;
+  box-shadow:0 12px 35px #39527316
+}
+
+.photo--projects img {
+  object-fit:contain;
+  border:1px solid var(--line);
+  box-shadow:0 12px 35px #39527312
+}
+
+.scene--projects .scene-layout {
+  grid-template-columns:.85fr 1.15fr
+}
+
+.scene--projects {
+  background:#f3f6f4
+}
+
+/* Music: changing the selection changes the prominence of one artist in the playlist. */
+.scene--music {
+  background:#fff2e8
+}
+
+.music-list {
+  width:100%
+}
+
+.artist {
+  border:0;
+  border-bottom:1px solid #dbcbbf;
+  background:transparent;
+  text-align:left;
+  display:grid;
+  grid-template-columns:30px 1fr 22px;
+  align-items:center;
+  gap:16px;
+  width:100%;
+  padding:23px 8px;
+  transition:padding .4s,color .4s,background .4s
+}
+
+.artist>span:nth-child(2) {
+  font-size:clamp(24px,2.7vw,44px);
+  letter-spacing:-.04em;
+  transition:transform .4s
+}
+
+.track-number {
+  font-size:12px;
+  color:#7d6c62
+}
+
+.track-mark {
+  opacity:0;
+  font-size:20px;
+  transition:opacity .3s
+}
+
+.artist.selected {
+  padding:32px 14px;
+  color:#ac4522;
+  background:#f7dec9
+}
+
+.artist.selected .track-mark {
+  opacity:1
+}
+
+.artist.selected>span:nth-child(2) {
+  transform:translateX(5px)
+}
+
+.small-note {
+  font-size:12px;
+  color:var(--muted);
+  margin-top:18px;
+  line-height:1.4
+}
+
+.small-note span {
+  float:right
+}
+
+/* Languages: each greeting is uncovered in reading order on entering the scene. */
+.scene--languages {
+  background:#edf5ed
+}
+
+.language-list {
+  width:100%;
+  display:grid;
+  gap:26px
+}
+
+.language {
+  border-bottom:1px solid #c6d5c8;
+  padding-bottom:22px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px
+}
+
+.language>span {
+  font-size:14px;
+  color:#4b6e57;
+  grid-column:1/-1
+}
+
+.language strong {
+  font-size:clamp(28px,4.2vw,63px);
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:-.03em;
+  clip-path:inset(0 100% 0 0)
+}
+
+.replay .language strong {
+  animation:read-word .8s var(--delay) forwards
+}
+
+.language small {
+  align-self:center;
+  color:#59715e;
+  font-size:14px
+}
+
+@keyframes read-word {
+  to {
+    clip-path:inset(0)
+  }
+
+}
+
+/* Piano: a real interactive keyboard, with feedback tied to each played note. */
+.scene--piano {
+  background:#f3f0fc
+}
+
+.piano-visual {
+  height:100%;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr;
+  grid-template-rows:minmax(0,1fr) auto;
+  gap:20px
+}
+
+.photo--piano {
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:0
+}
+
+.photo--piano img {
+  height:calc(100% - 32px);
+  width:auto;
+  max-width:100%;
+  object-fit:contain;
+  max-height:none
+}
+
+.photo--piano figcaption {
+  text-align:center
+}
+
+.keyboard {
+  display:flex;
+  height:110px;
+  border:1px solid #a8a1bc;
+  border-radius:4px;
+  background:#fff;
+  overflow:hidden
+}
+
+.piano-key {
+  position:relative;
+  width:calc(100% / 7);
+  background:#fff;
+  border:0;
+  border-right:1px solid #bbb5c8;
+  display:flex;
+  align-items:end;
+  justify-content:center;
+  padding:0 0 12px;
+  color:#736c85;
+  font-size:13px;
+  transition:background .12s,box-shadow .12s
+}
+
+.piano-key:last-child {
+  border-right:0
+}
+
+.piano-key:not(:nth-child(3)):not(:nth-child(7))::after {
+  content:'';
+  position:absolute;
+  z-index:2;
+  right:-9px;
+  top:0;
+  width:18px;
+  height:62%;
+  background:#29243a;
+  border-radius:0 0 3px 3px;
+  pointer-events:none
+}
+
+.piano-key.pressed {
+  background:#dbd0f5;
+  box-shadow:inset 0 5px 9px #77629744
+}
+
+.keyboard-block .small-note {
+  margin-top:9px
+}
+
+/* Chess: pieces move between actual squares, only on the play control. */
+.scene--chess {
+  background:#f7f3e9
+}
+
+.chess-visual {
+  width:min(100%,390px)
+}
+
+.game-heading {
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:10px
+}
+
+.game-heading span {
+  color:#657267;
+  font-size:11px
+}
+
+.game-heading strong {
+  font-size:14px;
+  font-weight:500
+}
+
+.game-heading b {
+  color:#2458df;
+  margin:0 5px
+}
+
+.chessboard {
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  aspect-ratio:1;
+  border:6px solid #e3dbca
+}
+
+.square {
+  background:#fff9eb
+}
+
+.square.dark {
+  background:#9fac99
+}
+
+.piece {
+  position:absolute;
+  left:calc(var(--x) * 12.5%);
+  top:calc(var(--y) * 12.5%);
+  width:12.5%;
+  height:12.5%;
+  display:grid;
+  place-items:center;
+  font:clamp(20px,3vw,44px)/1 'DejaVu Sans','Segoe UI Symbol',serif;
+  transition:left .55s ease,top .55s ease;
+  pointer-events:none
+}
+
+.black-piece {
+  color:#253c32
+}
+
+.white-piece {
+  color:#fffef5;
+  text-shadow:1px 1px #34493a,-1px -1px #34493a,1px -1px #34493a,-1px 1px #34493a
+}
+
+.board-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:12px;
+  gap:10px
+}
+
+.board-footer>div {
+  display:flex;
+  gap:12px
+}
+
+.board-footer button {
+  background:transparent;
+  border:0;
+  border-bottom:1px solid #63785f;
+  padding:8px 0;
+  font-size:14px
+}
+
+.board-footer button+button {
+  color:#6c776e;
+  border-bottom-color:transparent
+}
+
+.moves {
+  font-size:12px;
+  color:#63705f;
+  text-align:right
+}
+
+.game-progress {
+  height:2px;
+  background:#d6d0c3;
+  margin-top:8px;
+  overflow:hidden
+}
+
+.game-progress i {
+  display:block;
+  height:100%;
+  width:0;
+  background:#2458df;
+  transition:width .3s ease
+}
+
+.chess-stats {
+  display:flex;
+  align-items:center;
+  gap:28px;
+  border-top:1px solid #d5cebd;
+  margin-top:20px;
+  padding-top:20px
+}
+
+.chess-stats strong {
+  display:block;
+  font-size:34px;
+  font-weight:500;
+  letter-spacing:-.04em
+}
+
+.chess-stats span,.chess-stats p {
+  font-size:12px;
+  color:#616c62;
+  line-height:1.5
+}
+
+.chess-stats a {
+  color:inherit;
+  text-decoration-color:#8b968e;
+  text-underline-offset:3px
+}
+
+.chess-stats p {
+  margin-left:auto
+}
+
+/* Finance: the path is drawn in the direction of the academic change. */
+.study-path {
+  width:90%;
+  border-left:2px solid #c7d7ef;
+  padding-left:45px
+}
+
+.study-path>div>span {
+  font-size:13px;
+  color:var(--muted)
+}
+
+.study-path strong {
+  display:block;
+  font-size:clamp(32px,4vw,60px);
+  font-weight:500;
+  margin:12px 0;
+  letter-spacing:-.04em
+}
+
+.study-path p {
+  font-size:16px;
+  color:var(--muted)
+}
+
+.path-arrow {
+  display:block;
+  font-size:46px;
+  color:var(--blue);
+  line-height:1.3;
+  margin:24px 0;
+  clip-path:inset(0 0 100% 0)
+}
+
+.replay .path-arrow {
+  animation:path-reveal 1s .2s forwards
+}
+
+@keyframes path-reveal {
+  to {
+    clip-path:inset(0)
+  }
+
+}
+
+.scene--role {
+  background:#edf5f4
+}
+
+.role-visual {
+  border-left:1px solid #b6d0cc;
+  padding:20px 0 20px 48px;
+  width:90%
+}
+
+.bostik-logo {
+  width:min(300px,82%);
+  height:94px;
+  object-fit:cover;
+  object-position:center;
+  mix-blend-mode:multiply
+}
+
+.role-visual strong {
+  display:block;
+  font-size:clamp(45px,5.7vw,85px);
+  font-weight:500;
+  line-height:1.05;
+  letter-spacing:-.05em;
+  margin:28px 0
+}
+
+.role-line {
+  height:1px;
+  background:#8daea9;
+  width:65%;
+  margin:32px 0
+}
+
+.role-visual p {
+  font-size:22px;
+  margin-bottom:9px
+}
+
+.role-visual>span:last-child {
+  font-size:14px;
+  color:var(--muted)
+}
+
+.closing-index {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:8px
+}
+
+.closing-index span {
+  font-size:clamp(29px,4vw,59px);
+  line-height:1.12;
+  letter-spacing:-.04em;
+  color:#768da7
+}
+
+.closing-index span:nth-child(2n) {
+  color:#2458df
+}
+
+.scene--closing {
+  background:#eaf3fc
+}
+
+/* Consistent deck controls, accessible modal notes and chapter selection. */
+.controls {
+  height:62px;
+  position:absolute;
+  bottom:12px;
+  left:var(--pad);
+  right:var(--pad);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  z-index:100;
+  padding:0 8px 0 18px;
+  border:1px solid #b7c8d6cc;
+  border-radius:999px;
+  background:#fbfdffe8;
+  box-shadow:0 8px 30px #20384f1a;
+  backdrop-filter:blur(14px)
+}
+
+.position {
+  display:flex;
+  gap:16px;
+  align-items:center;
+  font-size:12px
+}
+
+.progress {
+  width:100px;
+  height:2px;
+  background:#bccbd8
+}
+
+.progress i {
+  display:block;
+  width:10%;
+  height:100%;
+  background:var(--blue);
+  transition:width .25s
+}
+
+.controls nav {
+  display:flex;
+  gap:8px;
+  align-items:center
+}
+
+.controls button {
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:4px;
+  padding:10px 12px;
+  font-size:13px;
+  min-height:42px;
+  min-width:42px
+}
+
+.controls button:hover:not(:disabled) {
+  background:#ffffff99;
+  border-color:#b5c7d5
+}
+
+.controls button:nth-last-child(-n+3) {
+  font-size:22px;
+  padding:5px 12px
+}
+
+.controls button[data-action="previous"],.controls button[data-action="next"] {
+  border-radius:999px;
+  border-color:#2458df;
+  background:#2458df;
+  color:white
+}
+
+.controls button[data-action="previous"]:hover:not(:disabled),.controls button[data-action="next"]:hover:not(:disabled) {
+  background:#1749c8;
+  border-color:#1749c8
+}
+
+/* Every chapter replays its own entrance on every visit. */
+.scene.replay .copy {
+  animation:copy-arrive .55s cubic-bezier(.2,.8,.2,1) both
+}
+
+.scene--intro.replay .photo {
+  animation:photo-drop .72s cubic-bezier(.2,.85,.2,1) both
+}
+
+.scene--languages.replay .language {
+  animation:language-line .58s var(--delay) both
+}
+
+.scene--music.replay .artist {
+  animation:track-queue .52s both
+}
+
+.scene--music.replay .artist:nth-child(1) {animation-delay:.04s}
+.scene--music.replay .artist:nth-child(2) {animation-delay:.10s}
+.scene--music.replay .artist:nth-child(3) {animation-delay:.16s}
+.scene--music.replay .artist:nth-child(4) {animation-delay:.22s}
+.scene--music.replay .artist:nth-child(5) {animation-delay:.28s}
+
+.scene--piano.replay .photo--piano {
+  animation:sheet-settle .7s cubic-bezier(.2,.8,.2,1) both
+}
+
+.scene--piano.replay .keyboard {
+  animation:keyboard-arrive .6s .16s both
+}
+
+.scene--piano.replay .piano-key {
+  animation:key-ripple .36s both
+}
+
+.scene--piano.replay .piano-key:nth-child(1) {animation-delay:.30s}
+.scene--piano.replay .piano-key:nth-child(2) {animation-delay:.34s}
+.scene--piano.replay .piano-key:nth-child(3) {animation-delay:.38s}
+.scene--piano.replay .piano-key:nth-child(4) {animation-delay:.42s}
+.scene--piano.replay .piano-key:nth-child(5) {animation-delay:.46s}
+.scene--piano.replay .piano-key:nth-child(6) {animation-delay:.50s}
+.scene--piano.replay .piano-key:nth-child(7) {animation-delay:.54s}
+
+.scene--chess.replay .chessboard {
+  animation:board-place .65s cubic-bezier(.2,.8,.2,1) both
+}
+
+.scene--chess.replay .game-heading,.scene--chess.replay .board-footer,.scene--chess.replay .chess-stats {
+  animation:chess-detail .5s .2s both
+}
+
+.scene--finance.replay .study-path>div:first-child {
+  animation:decision-step .5s both
+}
+
+.scene--finance.replay .study-path>div:last-child {
+  animation:decision-step .5s .48s both
+}
+
+.scene--code.replay .photo {
+  animation:window-align .7s cubic-bezier(.2,.8,.2,1) both
+}
+
+.scene--projects.replay .photo {
+  animation:project-unfold .7s cubic-bezier(.2,.8,.2,1) both
+}
+
+.scene--role.replay .bostik-logo {
+  animation:brand-arrive .62s both
+}
+
+.scene--role.replay .role-line {
+  transform-origin:left;
+  animation:product-line .72s .22s both
+}
+
+.scene--role.replay .role-visual strong,.scene--role.replay .role-visual p,.scene--role.replay .role-visual>span {
+  animation:role-detail .5s .3s both
+}
+
+.scene--closing.replay .closing-index span {
+  animation:closing-word .48s var(--delay) both
+}
+
+@keyframes copy-arrive {from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes photo-drop {from{opacity:0;transform:translateY(-28px) rotate(-2deg) scale(.96)}to{opacity:1;transform:rotate(2deg)}}
+@keyframes language-line {from{opacity:0;transform:translateX(28px);border-color:transparent}to{opacity:1;transform:none}}
+@keyframes track-queue {from{opacity:0;transform:translateX(42px)}to{opacity:1;transform:none}}
+@keyframes sheet-settle {from{opacity:0;transform:translateY(-20px) rotate(.8deg)}to{opacity:1;transform:none}}
+@keyframes keyboard-arrive {from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes key-ripple {0%{transform:translateY(0)}50%{transform:translateY(4px);background:#e7def8}100%{transform:translateY(0)}}
+@keyframes board-place {from{opacity:0;transform:rotate(-2deg) scale(.94)}to{opacity:1;transform:none}}
+@keyframes chess-detail {from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes decision-step {from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@keyframes window-align {from{opacity:0;transform:translate(28px,18px) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes project-unfold {from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0)}}
+@keyframes brand-arrive {from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:none}}
+@keyframes product-line {from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes role-detail {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes closing-word {from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+
+dialog {
+  width:min(780px,calc(100vw - 40px));
+  max-height:calc(100dvh - 70px);
+  border:1px solid #bbcbd8;
+  padding:32px;
+  background:#f5f9ff;
+  color:var(--ink);
+  box-shadow:0 20px 100px #182b4030;
+  border-radius:8px
+}
+
+dialog::backdrop {
+  background:#172b4066;
+  backdrop-filter:blur(4px)
+}
+
+dialog header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:24px
+}
+
+dialog h2 {
+  font-size:24px;
+  font-weight:500
+}
+
+dialog button {
+  background:transparent;
+  border:1px solid var(--line);
+  padding:10px;
+  border-radius:3px
+}
+
+dialog ol {
+  list-style:none;
+  padding:0;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px
+}
+
+dialog li button {
+  width:100%;
+  height:80px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  font-size:15px
+}
+
+dialog li span {
+  color:var(--blue);
+  font-size:12px
+}
+
+dialog p {
+  font-size:18px;
+  line-height:1.65
+}
+
+dialog small {
+  display:block;
+  margin-top:24px;
+  color:var(--muted);
+  font-size:12px
+}
+
+@media(min-aspect-ratio:19/10) {
+  .scene-layout {
+    inset:75px var(--pad) 90px
+  }
+
+  .copy h1 {
+    font-size:clamp(38px,7.5vh,76px)
+  }
+
+  .description {
+    font-size:clamp(16px,2.7vh,23px)
+  }
+
+  .photo img {
+    max-height:calc(100dvh - 220px)
+  }
+
+  .artist {
+    padding:16px 8px
+  }
+
+  .artist.selected {
+    padding:21px 14px
+  }
+
+  .artist>span:nth-child(2) {
+    font-size:5vh
+  }
+
+  .chess-visual {
+    width:min(100%,52vh)
+  }
+
+  .chess-stats {
+    margin-top:10px;
+    padding-top:10px
+  }
+
+  .chess-stats strong {
+    font-size:26px
+  }
+
+}
+
+@media(max-width:800px) {
+  .masthead {
+    height:52px;
+    font-size:9px;
+    letter-spacing:.1em
+  }
+
+  .scene-layout,.scene--code .scene-layout,.scene--projects .scene-layout {
+    inset:70px var(--pad) 85px;
+    gap:24px;
+    grid-template-columns:1fr 1fr
+  }
+
+  .copy h1,.scene--intro h1 {
+    font-size:clamp(30px,5.8vw,48px)
+  }
+
+  .description {
+    font-size:16px
+  }
+
+  .eyebrow {
+    font-size:12px;
+    margin-bottom:18px
+  }
+
+  .artist>span:nth-child(2) {
+    font-size:24px
+  }
+
+  .artist {
+    gap:8px;
+    padding:18px 4px
+  }
+
+  .artist.selected {
+    padding:22px 4px
+  }
+
+  .track-mark {
+    display:none
+  }
+
+  .artist {
+    grid-template-columns:20px 1fr
+  }
+
+  .study-path {
+    padding-left:22px
+  }
+
+  .role-visual {
+    padding-left:24px
+  }
+
+  .language strong {
+    font-size:32px
+  }
+
+  .controls {
+    left:20px;
+    right:20px
+  }
+
+  .progress {
+    width:55px
+  }
+
+  .photo figcaption {
+    font-size:11px
+  }
+
+  .piece {
+    font-size:26px
+  }
+
+}
+
+@media(max-width:600px) and (orientation:portrait) {
+  :root {
+    --pad:24px
+  }
+
+  .masthead span:last-child {
+    display:none
+  }
+
+  .scene-layout,.scene--code .scene-layout,.scene--projects .scene-layout {
+    inset:66px 24px 85px;
+    grid-template-columns:1fr;
+    grid-template-rows:auto minmax(0,1fr);
+    gap:22px;
+    align-items:start
+  }
+
+  .copy h1,.scene--intro h1 {
+    font-size:clamp(29px,7.9vw,42px);
+    margin-bottom:14px
+  }
+
+  .copy h1 br {
+    display:none
+  }
+
+  .copy h1 br::after {
+    content:' '
+  }
+
+  .description {
+    font-size:15px;
+    line-height:1.45;
+    max-width:none
+  }
+
+  .eyebrow {
+    font-size:11px;
+    margin-bottom:12px
+  }
+
+  .aside {
+    font-size:13px;
+    margin-top:12px
+  }
+
+  .visual {
+    height:100%;
+    min-height:0
+  }
+
+  .photo {
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center
+  }
+
+  .photo img {
+    height:calc(100% - 30px);
+    width:auto;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain
+  }
+
+  .photo--intro {
+    max-width:240px
+  }
+
+  .photo--code img {
+    border-width:4px
+  }
+
+  .photo figcaption {
+    margin-top:8px
+  }
+
+  .artist {
+    padding:11px 4px
+  }
+
+  .artist.selected {
+    padding:15px 8px
+  }
+
+  .artist>span:nth-child(2) {
+    font-size:22px
+  }
+
+  .music-list .small-note {
+    margin-top:12px
+  }
+
+  .language-list {
+    gap:10px
+  }
+
+  .language {
+    padding-bottom:12px;
+    gap:5px
+  }
+
+  .language>span {
+    font-size:12px
+  }
+
+  .language strong {
+    font-size:30px
+  }
+
+  .keyboard {
+    height:65px
+  }
+
+  .piano-visual {
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr;
+    align-items:center;
+    gap:15px
+  }
+
+  .photo--piano {
+    height:100%
+  }
+
+  .photo--piano figcaption {
+    font-size:10px
+  }
+
+  .keyboard-block .small-note span {
+    float:none;
+    display:block
+  }
+
+  .chess-visual {
+    width:min(100%,31vh)
+  }
+
+  .chess-stats {
+    gap:15px;
+    padding-top:8px;
+    margin-top:8px
+  }
+
+  .chess-stats strong {
+    font-size:24px
+  }
+
+  .chess-stats p {
+    font-size:9px
+  }
+
+  .board-footer {
+    margin-top:4px
+  }
+
+  .board-footer button,.moves {
+    font-size:10px
+  }
+
+  .piece {
+    font-size:clamp(16px,3.4vh,27px)
+  }
+
+  .study-path {
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    width:100%;
+    padding:0;
+    border-left:0;
+    gap:10px
+  }
+
+  .study-path strong {
+    font-size:26px
+  }
+
+  .study-path p {
+    font-size:13px
+  }
+
+  .path-arrow {
+    transform:rotate(-90deg);
+    margin:0;
+    font-size:32px
+  }
+
+  .role-visual {
+    padding:12px 0 12px 24px
+  }
+
+  .role-visual strong {
+    font-size:38px;
+    margin:12px 0
+  }
+
+  .role-line {
+    margin:16px 0
+  }
+
+  .closing-index {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    width:100%;
+    gap:20px
+  }
+
+  .closing-index span {
+    font-size:26px
+  }
+
+  .controls {
+    height:68px
+  }
+
+  .controls button {
+    padding:6px;
+    min-width:32px;
+    font-size:11px
+  }
+
+  .controls nav {
+    gap:2px
+  }
+
+  .controls button:nth-last-child(-n+3) {
+    font-size:19px;
+    padding:5px
+  }
+
+  .position {
+    gap:8px
+  }
+
+  .progress {
+    width:35px
+  }
+
+  dialog {
+    padding:22px
+  }
+
+  dialog ol {
+    grid-template-columns:1fr
+  }
+
+  dialog li button {
+    height:50px
+  }
+
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
+    animation-duration:.001ms!important;
+    animation-delay:0ms!important;
+    transition-duration:.001ms!important
+  }
+
+  .language strong {
+    clip-path:none
+  }
+
+}
+
+@media print {
+  html,body {
+    height:auto;
+    overflow:visible
+  }
+
+  .masthead,.controls,dialog {
+    display:none!important
+  }
+
+  #deck,#scenes {
+    height:auto;
+    overflow:visible
+  }
+
+  .scene {
+    position:relative;
+    visibility:visible;
+    opacity:1;
+    height:190mm;
+    page-break-after:always;
+    print-color-adjust:exact
+  }
+
+  .scene-layout {
+    inset:12mm
+  }
+
+  .photo img {
+    max-height:150mm
+  }
+
+  .language strong {
+    clip-path:none
+  }
+
+}

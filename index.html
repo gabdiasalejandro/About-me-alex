@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#edf5fc">
+  <meta name="description" content="A little about Alejandro Gallardo: languages, music, chess, finance and the things he builds.">
+  <title>Alejandro Gallardo · About me</title>
+  <link rel="stylesheet" href="assets/styles/presentation.css">
+  <script defer src="assets/scripts/content.js"></script>
+  <script defer src="assets/scripts/app.js"></script>
+</head>
+<body>
+  <main id="deck" aria-label="About me presentation">
+    <header class="masthead"><span>ALEJANDRO GALLARDO</span><span>A LITTLE ABOUT ME</span></header>
+    <div id="scenes"></div>
+    <footer class="controls">
+      <div class="position"><span id="current">01</span><div class="progress"><i></i></div><span id="total">10</span></div>
+      <nav aria-label="Presentation controls"><button data-action="overview" title="Overview (O)">Overview</button><button data-action="notes" title="Speaker notes (N)">Notes</button><button data-action="fullscreen" title="Fullscreen (F)">⛶</button><button data-action="previous" aria-label="Previous slide">←</button><button data-action="next" aria-label="Next slide">→</button></nav>
+    </footer>
+  </main>
+  <dialog id="overview"><header><h2>Choose a chapter</h2><button data-close="overview">Close</button></header><ol></ol></dialog>
+  <dialog id="notes"><header><h2>Speaker notes</h2><button data-close="notes">Close</button></header><p></p><small>These notes are visible on this screen. Close them before sharing it.</small></dialog>
+  <noscript>Enable JavaScript to navigate this presentation.</noscript>
+</body>
+</html>
